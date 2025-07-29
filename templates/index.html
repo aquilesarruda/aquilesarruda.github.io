@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+
+<!-- Contagem por bairro -->
+<div class="mb-4">
+  <h5 class="mb-3">Contagem de Registros por Bairro:</h5>
+  <ul class="list-group list-group-horizontal flex-wrap">
+    {% for bairro, qtd in contagem_bairros.items() %}
+      <li class="list-group-item me-2 mb-2">
+        <strong>{{ bairro }}:</strong> {{ qtd }}
+      </li>
+    {% endfor %}
+    {% if contagem_bairros|length == 0 %}
+      <li class="list-group-item">Nenhum registro cadastrado.</li>
+    {% endif %}
+  </ul>
+</div>
+
+<!-- Botão de adicionar -->
+<div class="d-flex justify-content-end mb-3">
+  <a href="/criar" class="btn btn-primary">
+    <i class="bi bi-plus-lg me-1"></i> Adicionar Registro
+  </a>
+</div>
+
+<!-- Tabela de registros -->
+<div class="table-responsive">
+  <table class="table table-bordered table-hover align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Idade</th>
+        <th>Bairro</th>
+        <th class="text-center">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in registros %}
+      <tr>
+        <td>{{ r[0] }}</td>
+        <td>{{ r[1] }}</td>
+        <td>{{ r[2] }}</td>
+        <td>{{ r[3] }}</td>
+        <td class="text-center">
+          <a href="/editar/{{ r[0] }}" class="btn btn-sm btn-outline-primary me-1">
+            <i class="bi bi-pencil-fill"></i> Editar
+          </a>
+          <a href="/deletar/{{ r[0] }}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Tem certeza que deseja deletar este registro?')">
+            <i class="bi bi-trash-fill"></i> Deletar
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+      {% if registros|length == 0 %}
+      <tr>
+        <td colspan="5" class="text-center text-muted">Nenhum registro encontrado.</td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+  <h2 class="mb-4">{{ acao }} Registro</h2>
+
+  <form method="POST" novalidate>
+    <!-- Campo: Nome -->
+    <div class="mb-3">
+      <label for="nome" class="form-label">Nome</label>
+      <input
+        type="text"
+        id="nome"
+        name="nome"
+        value="{{ registro.nome or '' }}"
+        class="form-control"
+        placeholder="Digite o nome completo"
+        required
+      >
+    </div>
+
+    <!-- Campo: Idade -->
+    <div class="mb-3">
+      <label for="idade" class="form-label">Idade</label>
+      <input
+        type="number"
+        id="idade"
+        name="idade"
+        value="{{ registro.idade or '' }}"
+        class="form-control"
+        placeholder="Digite a idade"
+        min="0"
+        required
+      >
+    </div>
+
+    <!-- Campo: Bairro -->
+    <div class="mb-4">
+      <label for="bairro" class="form-label">Bairro</label>
+      <select id="bairro" name="bairro" class="form-select" required>
+        <option value="" disabled {% if not registro.bairro %}selected{% endif %}>Selecione um bairro</option>
+        {% for bairro in [
+          'CAPIVARA', 'CIDADE NOVA', 'COQUEIROS', 'NOVA IGUABA',
+          'PARQUE DOS DESEJOS', 'SÃO MIGUEL', 'SAPEATIBA MIRIM',
+          'UBAS', 'ARRASTÃO DAS PEDRAS', 'BOA VISTA', 'IGARAPIAPUNHA',
+          'UNIAO', 'VILA NOVA', 'CANELLAS CITY', 'CENTRO', 'ESTAÇÃO',
+          'IGUABA PEQUENA', 'IGUABELA', 'JARDIM SOLARES', 'PEDREIRA',
+          'SOPOTO', 'TAMARIZ'
+        ] %}
+        <option value="{{ bairro }}" {% if registro.bairro == bairro %}selected{% endif %}>{{ bairro }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- Ações -->
+    <div class="d-flex justify-content-start gap-2">
+      <button type="submit" class="btn btn-primary">
+        <i class="bi bi-check-circle-fill me-1"></i> Salvar
+      </button>
+      <a href="/" class="btn btn-secondary">Cancelar</a>
+    </div>
+  </form>
+{% endblock %}
